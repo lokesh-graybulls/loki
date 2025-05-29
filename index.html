@@ -105,6 +105,10 @@
   </style>
 </head>
 <body>
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_URL_HERE/exec";
+  </script>
+
   <h1>Auravy Spa</h1>
 
   <nav>
@@ -249,7 +253,7 @@
         payment: document.getElementById("payment-method").value
       };
 
-      fetch('https://script.google.com/macros/s/AKfycbwqlPR38Lfkq13CZbHOVXn9Kf2wdaX0pfZNbs-KTyiokjUuiLi0BCdPAKQ7JFSUzJva/exec', {
+      fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
@@ -263,7 +267,7 @@
     }
 
     function showDashboard() {
-      fetch('https://script.google.com/macros/s/AKfycbxDlJTN-e1rPo5k-230Ga4yRsooVWCK0SA8uC0xSeOURfuw3x_PJZbBL60Uiy04_pQa/exec?mode=view')
+      fetch(`${GOOGLE_SCRIPT_URL}?mode=view`)
         .then(res => res.json())
         .then(data => {
           const body = document.getElementById("dashboard-body");
@@ -279,4 +283,3 @@
   </script>
 </body>
 </html>
-
