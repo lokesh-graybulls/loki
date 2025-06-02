@@ -1,218 +1,630 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roofing Audit UI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f4f8fb;
-      color: #333;
-    }
-    section { padding: 60px 20px; max-width: 1100px; margin: auto; }
-    .hidden { display: none; }
-    .btn {
-      background: #2a9d8f;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .btn:hover { background: #21867a; }
-    .hero {
-      text-align: center;
-      background: linear-gradient(135deg, #2a9d8f, #264653);
-      color: white;
-      padding: 100px 20px;
-    }
-    .hero input {
-      padding: 12px;
-      font-size: 1em;
-      width: 300px;
-      margin: 10px;
-      border-radius: 6px;
-      border: none;
-    }
-    .features, .audit-report, .dashboard, .checkout, .congrats, .proposal-page {
-      background: white;
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-      margin-top: 50px;
-    }
-    .proposal-options {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .proposal-card {
-      background: #fdfdfd;
-      flex: 1 1 calc(33% - 30px);
-      border: 1px solid #e0e0e0;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-    }
-    .proposal-card:hover { transform: scale(1.02); }
-    .proposal-card h4 { margin-bottom: 10px; }
-    .proposal-card ul { padding-left: 20px; margin-bottom: 15px; }
-    .progress-bar {
-      width: 100%; background: #ccc; height: 20px;
-      border-radius: 10px; overflow: hidden; margin: 20px 0;
-    }
-    .progress-bar-inner {
-      height: 100%; width: 0%; background: #2a9d8f;
-      transition: width 1s ease-in-out;
-    }
-    .dashboard ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    .dashboard ul li {
-      margin: 10px 0;
-      padding: 10px;
-      border-left: 5px solid #2a9d8f;
-      background: #e7f9f6;
-      border-radius: 6px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoofAudit AI | Instantly Audit Your Roofing Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .blur-content {
+            filter: blur(4px);
+        }
+        .package-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <section class="hero" id="hero">
-    <h1>Instantly Audit Your Roofing Business</h1>
-    <p>Enter your website or business name to get started</p>
-    <input type="text" id="businessInput" placeholder="Enter URL or Business Name" />
-    <br />
-    <button class="btn" onclick="startScan()">Start My Free Audit</button>
-  </section>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="ml-2 text-xl font-bold text-gray-800">RoofAudit AI</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition">Features</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition">Pricing</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition">Case Studies</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition">Contact</a>
+                <button id="login-btn" class="px-4 py-2 text-indigo-600 font-medium hover:text-indigo-700 transition">Login</button>
+                <button class="px-4 py-2 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 transition">Sign Up</button>
+            </div>
+            <button class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
 
-  <section class="features hidden" id="scanning">
-    <h2>🔍 Scanning Your Brand...</h2>
-    <div class="progress-bar"><div class="progress-bar-inner" id="progressBar"></div></div>
-    <p id="scanText">Initializing...</p>
-  </section>
+    <!-- Page Container -->
+    <div id="page-container">
+        <!-- 1. Homepage / Hero Section -->
+        <section id="homepage" class="min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 py-12 md:py-20">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
+                            Instantly Audit Your Roofing Business with AI
+                        </h1>
+                        <p class="text-xl text-gray-600 mb-8">
+                            Scan your site, get a performance grade, and discover how to outrank your competitors with actionable insights.
+                        </p>
+                        <div class="bg-white rounded-lg shadow-md p-4 mb-8">
+                            <label for="website" class="block text-sm font-medium text-gray-700 mb-2">Enter your business name or website</label>
+                            <div class="flex">
+                                <input type="text" id="website" class="flex-grow px-4 py-3 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="yourroofingcompany.com">
+                                <button id="start-audit-btn" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-r-md hover:bg-indigo-700 transition">
+                                    Start My Free Audit
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-6 mb-8">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2 text-sm text-gray-600">Google Verified</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2 text-sm text-gray-600">500+ Contractors Helped</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2 text-sm text-gray-600">100% Satisfaction Guarantee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-10">
+                        <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+                            <div class="p-6 bg-indigo-600 text-white">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold">Sample Audit Report</h3>
+                                    <span class="px-2 py-1 bg-green-500 rounded text-xs font-medium">Premium</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-sm text-gray-600">SEO Score</span>
+                                            <span class="text-sm font-medium text-amber-500">65/100</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-amber-500 h-2 rounded-full" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-sm text-gray-600">Mobile Score</span>
+                                            <span class="text-sm font-medium text-red-500">42/100</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-red-500 h-2 rounded-full" style="width: 42%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-sm text-gray-600">Social Media</span>
+                                            <span class="text-sm font-medium text-green-500">82/100</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 82%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-sm text-gray-600">Local Presence</span>
+                                            <span class="text-sm font-medium text-amber-500">58/100</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-amber-500 h-2 rounded-full" style="width: 58%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t border-gray-200 pt-4">
+                                    <h4 class="font-medium text-gray-800 mb-3">Top Recommendations:</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="ml-2 text-sm text-gray-600">Fix 4 critical mobile usability issues</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="ml-2 text-sm text-gray-600">Optimize meta descriptions on 6 pages</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="ml-2 text-sm text-gray-600">Excellent Instagram engagement rate</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-  <section class="audit-report hidden" id="auditReport">
-    <h2>📋 Audit Report</h2>
-    <p><strong>SEO Health:</strong> 62% – Needs improvement</p>
-    <p><strong>Social Presence:</strong> <span style="filter: blur(4px);">Incomplete Facebook Profile</span> <em>(Premium Only)</em></p>
-    <p><strong>Google Reviews:</strong> 3.6 ⭐ – Try to improve local feedback</p>
-    <p><strong>Instagram Profile:</strong> <span style="filter: blur(4px);">No bio or highlights</span> <em>(Premium Only)</em></p>
-    <button class="btn" onclick="showProposal()">View Recommended Fix Plans</button>
-  </section>
+                <!-- Testimonials -->
+                <div class="mt-20">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">Trusted by Roofing Professionals Nationwide</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 font-bold text-xl">JD</div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">John Decker</h4>
+                                    <p class="text-sm text-gray-600">Decker Roofing, TX</p>
+                                </div>
+                            </div>
+                            <div class="flex mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">"The audit revealed critical issues with our website that were costing us leads. After implementing the recommendations, our leads increased by 43% in just 2 months."</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 font-bold text-xl">SM</div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">Sarah Miller</h4>
+                                    <p class="text-sm text-gray-600">Miller Roofing Solutions, CA</p>
+                                </div>
+                            </div>
+                            <div class="flex mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">"The social media strategy they recommended helped us build a strong Instagram presence. We're now getting regular inquiries from our posts and stories."</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 font-bold text-xl">RJ</div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">Robert Johnson</h4>
+                                    <p class="text-sm text-gray-600">Johnson & Sons Roofing, FL</p>
+                                </div>
+                            </div>
+                            <div class="flex mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                            </div>
+                            <p class="text-gray-600">"We were struggling to rank in our local area despite being in business for 15 years. The Full Growth Package completely transformed our online presence."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section class="proposal-page hidden" id="proposalSelection">
-    <h2>📦 Choose Your Growth Plan</h2>
-    <p>Select a bundle tailored to fix your roofing business's digital presence.</p>
-    <div class="proposal-options">
-      <div class="proposal-card">
-        <h4>🚀 SEO Starter Kit <span>$49</span></h4>
-        <ul><li>Fix meta & alt tags</li><li>Sitemap setup</li><li>H1 tag optimization</li></ul>
-        <button class="btn" onclick="addToCart('SEO Starter Kit', 49)">Add to Cart</button>
-      </div>
-      <div class="proposal-card">
-        <h4>📱 Social Boost Pack <span>$79</span></h4>
-        <ul><li>Instagram revamp</li><li>Facebook audit fix</li><li>Content calendar</li></ul>
-        <button class="btn" onclick="addToCart('Social Boost Pack', 79)">Add to Cart</button>
-      </div>
-      <div class="proposal-card">
-        <h4>💼 Full Growth Bundle <span>$129</span></h4>
-        <ul><li>All fixes from SEO & Social</li><li>GMB optimization</li><li>1-on-1 Expert Call</li></ul>
-        <button class="btn" onclick="addToCart('Full Growth Bundle', 129)">Add to Cart</button>
-      </div>
-    </div>
-    <button class="btn" onclick="goToCheckout()">Proceed to Checkout</button>
-  </section>
+        <!-- 2. Scanning Animation Page -->
+        <section id="scanning-page" class="hidden min-h-screen flex items-center justify-center bg-gray-50">
+            <div class="container mx-auto px-4 md:px-6 py-12 max-w-2xl">
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Analyzing Your Roofing Business</h2>
+                    <div class="mb-8">
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                            <div id="progress-bar" class="progress-bar bg-indigo-600 h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p id="scan-message" class="text-gray-600">Initializing scan...</p>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section class="checkout hidden" id="checkout">
-    <h2>🛒 Checkout</h2>
-    <p id="checkoutSummary"></p>
-    <button class="btn" onclick="showCongrats()">Buy Now</button>
-  </section>
+        <!-- 3. Audit Report + Proposal Packages Page -->
+        <section id="proposal-page" class="hidden min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 py-12">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Your Roofing Business Audit Results</h2>
+                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Based on our analysis, we've identified several opportunities to improve your online presence and generate more leads.</p>
+                
+                <!-- Audit Summary -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-12 max-w-4xl mx-auto">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">Audit Summary</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-600">SEO Score</span>
+                                <span class="text-sm font-medium text-amber-500">65/100</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-amber-500 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-600">Mobile Score</span>
+                                <span class="text-sm font-medium text-red-500">42/100</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-600">Social Media</span>
+                                <span class="text-sm font-medium text-green-500">82/100</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-600">Local Presence</span>
+                                <span class="text-sm font-medium text-amber-500">58/100</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-amber-500 h-2 rounded-full" style="width: 58%"></div>
+                            </div>
+                        </div>
+                    </div>
 
-  <section class="congrats hidden" id="congrats">
-    <h2>🎉 Congratulations!</h2>
-    <p>You're now a premium subscriber. We'll start working on your improvements immediately.</p>
-    <button class="btn" onclick="showDashboard()">Go to Dashboard</button>
-  </section>
+                    <!-- Detailed Findings -->
+                    <div class="border-t border-gray-200 pt-6">
+                        <h4 class="font-medium text-gray-800 mb-4">Key Findings:</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-medium text-gray-700 mb-2">SEO Issues</h5>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-2 text-sm text-gray-600">Missing meta descriptions on 6 pages</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-2 text-sm text-gray-600">Slow page load speed (4.2s average)</span>
+                                    </li>
+                                    <li class="flex items-start blur-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-2 text-sm text-gray-600">Low keyword density for target terms</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-700 mb-2">Mobile Experience</h5>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-2 text-sm text-gray-600">Text too small to read on mobile</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-2 text-sm text-gray-600">Contact form broken on mobile devices</span>
+                                    </li>
+                                    <li class="flex items-start blur-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="ml-2 text-sm text-gray-600">Images not optimized for mobile</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-  <section class="dashboard hidden" id="dashboard">
-    <h2>📊 Your Business Dashboard</h2>
-    <p>Here’s your personalized monthly tasklist:</p>
-    <ul>
-      <li>🔧 SEO Enhancements – In Progress</li>
-      <li>📅 Content Calendar – Uploaded for Next 30 Days</li>
-      <li>📍 Google My Business – Pending Optimization</li>
-      <li>📈 Monthly Report – Available on 5th of Every Month</li>
-      <li>🗓️ Book Strategy Call – <em>Pending</em></li>
-    </ul>
-  </section>
+                    <div class="mt-6 flex justify-center">
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 flex items-center max-w-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p class="text-sm text-indigo-700">Unlock the full audit report and get a customized improvement plan by selecting one of our growth packages below.</p>
+                        </div>
+                    </div>
+                </div>
 
-  <script>
-    let selectedPlan = null;
-    let selectedPrice = 0;
+                <!-- Package Selection -->
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-8">Choose Your Growth Package</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <!-- Starter SEO Kit -->
+                    <div class="package-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent hover:border-indigo-500 transition-all">
+                        <div class="p-6 bg-indigo-50">
+                            <h4 class="text-xl font-bold text-gray-800 mb-2">Starter SEO Kit</h4>
+                            <div class="flex items-baseline">
+                                <span class="text-3xl font-bold text-indigo-600">$99</span>
+                                <span class="text-gray-500 ml-2">/month</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3 mb-6">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Full SEO Audit Report</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Keyword Research</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">On-Page SEO Fixes</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">1 Monthly Blog Post</span>
+                                </li>
+                                <li class="flex items-start text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2">Social Media Management</span>
+                                </li>
+                                <li class="flex items-start text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2">Google My Business Optimization</span>
+                                </li>
+                            </ul>
+                            <button data-package="starter" data-price="99" class="select-package-btn w-full py-3 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 transition">Add to Cart</button>
+                        </div>
+                    </div>
 
-    function startScan() {
-      document.getElementById('hero').classList.add('hidden');
-      document.getElementById('scanning').classList.remove('hidden');
-      let scanSteps = [
-        'Checking SEO setup...',
-        'Analyzing mobile speed...',
-        'Checking Instagram profile...',
-        'Reviewing Google Maps...',
-        'Finalizing report...'
-      ];
-      let i = 0;
-      let progress = 0;
-      let interval = setInterval(() => {
-        if (i < scanSteps.length) {
-          document.getElementById('scanText').innerText = scanSteps[i];
-          document.getElementById('progressBar').style.width = `${progress += 20}%`;
-          i++;
-        } else {
-          clearInterval(interval);
-          document.getElementById('scanning').classList.add('hidden');
-          document.getElementById('auditReport').classList.remove('hidden');
-        }
-      }, 1000);
-    }
+                    <!-- Social Booster Pack -->
+                    <div class="package-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent hover:border-indigo-500 transition-all">
+                        <div class="p-6 bg-indigo-50">
+                            <h4 class="text-xl font-bold text-gray-800 mb-2">Social Booster Pack</h4>
+                            <div class="flex items-baseline">
+                                <span class="text-3xl font-bold text-indigo-600">$149</span>
+                                <span class="text-gray-500 ml-2">/month</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3 mb-6">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Basic SEO Audit Report</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Social Media Strategy</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">12 Social Posts per Month</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Google My Business Optimization</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Review Management</span>
+                                </li>
+                                <li class="flex items-start text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2">Advanced SEO Optimization</span>
+                                </li>
+                            </ul>
+                            <button data-package="social" data-price="149" class="select-package-btn w-full py-3 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 transition">Add to Cart</button>
+                        </div>
+                    </div>
 
-    function showProposal() {
-      document.getElementById('auditReport').classList.add('hidden');
-      document.getElementById('proposalSelection').classList.remove('hidden');
-    }
+                    <!-- Full Growth Pack -->
+                    <div class="package-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-indigo-500 relative">
+                        <div class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                            BEST VALUE
+                        </div>
+                        <div class="p-6 gradient-bg">
+                            <h4 class="text-xl font-bold text-white mb-2">Full Growth Pack</h4>
+                            <div class="flex items-baseline">
+                                <span class="text-3xl font-bold text-white">$299</span>
+                                <span class="text-indigo-100 ml-2">/month</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3 mb-6">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Comprehensive SEO Audit</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Advanced SEO Optimization</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">20 Social Posts per Month</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">4 Monthly Blog Posts</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Complete GMB Optimization</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-2 text-gray-600">Monthly Strategy Call</span>
+                                </li>
+                            </ul>
+                            <button data-package="full" data-price="299" class="select-package-btn w-full py-3 gradient-bg text-white rounded-md font-medium hover:opacity-90 transition">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    function addToCart(plan, price) {
-      selectedPlan = plan;
-      selectedPrice = price;
-      alert(`Added "${plan}" to cart.`);
-    }
+        <!-- 4. Checkout Page -->
+        <section id="checkout-page" class="hidden min-h-screen bg-gray-50 py-12">
+            <div class="container mx-auto px-4 md:px-6 max-w-4xl">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Complete Your Order</h2>
+                
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="md:w-1/2 md:pr-8 mb-8 md:mb-0">
+                                <h3 class="text-xl font-bold text-gray-800 mb-6">Your Information</h3>
+                                <form id="checkout-form">
+                                    <div class="mb-4">
+                                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                        <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
+                                        <input type="text" id="company" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="md:w-1/2 md:pl-8 border-t md:border-t-0 md:border-l border-gray-200 pt-8 md:pt-0">
+                                <h3 class="text-xl font-bold text-gray-800 mb-6">Order Summary</h3>
+                                <div id="order-summary" class="mb-6">
+                                    <!-- Will be populated by JavaScript -->
+                                </div>
+                                <div class="border-t border-gray-200 pt-4 mb-6">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-gray-600">Subtotal</span>
+                                        <span id="subtotal" class="font-medium">$0</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Total (Monthly)</span>
+                                        <span id="total" class="font-bold text-lg">$0</span>
+                                    </div>
+                                </div>
+                                <button id="complete-order-btn" class="w-full py-3 gradient-bg text-white rounded-md font-medium hover:opacity-90 transition">Subscribe & Pay</button>
+                                <p class="text-xs text-gray-500 mt-4 text-center">By clicking "Subscribe & Pay", you agree to our Terms of Service and Privacy Policy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    function goToCheckout() {
-      if (!selectedPlan) return alert("Please select a plan");
-      document.getElementById('proposalSelection').classList.add('hidden');
-      document.getElementById('checkout').classList.remove('hidden');
-      document.getElementById('checkoutSummary').innerHTML = `You're purchasing the <strong>${selectedPlan}</strong> for $${selectedPrice}`;
-    }
-
-    function showCongrats() {
-      document.getElementById('checkout').classList.add('hidden');
-      document.getElementById('congrats').classList.remove('hidden');
-    }
-
-    function showDashboard() {
-      document.getElementById('congrats').classList.add('hidden');
-      document.getElementById('dashboard').classList.remove('hidden');
-    }
-  </script>
-</body>
-</html>
+        <!-- 5. Congratulations Page -->
+        <section id="congrats-page" class="hidden min-h-screen bg-gray-50 flex items-center">
+            <div class="container mx-auto px-4 md:px-6 py-12 max-w-2xl">
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">🎉 You're now a Premium Member!</h2>
+                    <p class="text-gray-600 mb-8">We're starting your brand audit. You'll receive a detailed monthly report soon.</p>
+                    <div class="bg-indigo-50 rounded-lg p-6 mb-8">
+                        <h3 class="font-medium text-gray-800 mb-3">What happens next```
