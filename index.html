@@ -1,217 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roofing Audit UI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #f0f2f5;
+      background: #f4f8fb;
       color: #333;
     }
-    section {
-      padding: 60px 20px;
-      max-width: 900px;
-      margin: auto;
+    section { padding: 60px 20px; max-width: 1100px; margin: auto; }
+    .hidden { display: none; }
+    .btn {
+      background: #2a9d8f;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
     }
+    .btn:hover { background: #21867a; }
     .hero {
+      text-align: center;
       background: linear-gradient(135deg, #2a9d8f, #264653);
       color: white;
-      text-align: center;
-      padding: 100px 20px 80px;
-    }
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 0.3em;
-    }
-    .hero p {
-      font-size: 1.2em;
-      max-width: 700px;
-      margin: 0 auto 20px;
-    }
-    .hero input, .hero button {
-      padding: 12px 20px;
-      font-size: 1em;
-      margin: 10px;
+      padding: 100px 20px;
     }
     .hero input {
+      padding: 12px;
+      font-size: 1em;
       width: 300px;
+      margin: 10px;
       border-radius: 6px;
       border: none;
     }
-    .hero button {
-      background: #e76f51;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-    }
-    .hero button:hover {
-      background: #d65a3f;
-    }
-    .features {
+    .features, .audit-report, .dashboard, .checkout, .congrats, .proposal-page {
       background: white;
-      padding: 40px 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 30px;
-      text-align: center;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      margin-top: 50px;
     }
-    .feature-card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    .proposal-options {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .feature-card h3 {
-      margin: 10px 0;
-      color: #2a9d8f;
+    .proposal-card {
+      background: #fdfdfd;
+      flex: 1 1 calc(33% - 30px);
+      border: 1px solid #e0e0e0;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
     }
-    .feature-card p {
-      font-size: 0.95em;
-      color: #555;
-    }
-    .hidden { display: none; }
+    .proposal-card:hover { transform: scale(1.02); }
+    .proposal-card h4 { margin-bottom: 10px; }
+    .proposal-card ul { padding-left: 20px; margin-bottom: 15px; }
     .progress-bar {
-      width: 100%;
-      background-color: #ddd;
-      border-radius: 5px;
-      overflow: hidden;
-      margin: 30px 0 10px;
+      width: 100%; background: #ccc; height: 20px;
+      border-radius: 10px; overflow: hidden; margin: 20px 0;
     }
     .progress-bar-inner {
-      height: 20px;
-      background-color: #2a9d8f;
-      width: 0%;
+      height: 100%; width: 0%; background: #2a9d8f;
       transition: width 1s ease-in-out;
     }
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    .dashboard ul {
+      list-style: none;
+      padding-left: 0;
     }
-    .card h3 { margin-top: 0; }
-    .btn {
-      background: #264653;
-      color: #fff;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
+    .dashboard ul li {
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 5px solid #2a9d8f;
+      background: #e7f9f6;
       border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    .btn:hover {
-      background: #1d3640;
-    }
-    em {
-      font-style: italic;
-      color: #888;
-    }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.8em;
-      background-color: #e76f51;
-      color: white;
-      margin-left: 10px;
-    }
-    #dashboard .progress-bar {
-      height: 10px;
-      border-radius: 4px;
-      background-color: #ddd;
-      overflow: hidden;
-      margin-top: 5px;
-    }
-    #dashboard .progress-bar-inner {
-      height: 10px;
-      transition: width 0.5s ease;
-    }
-    @media screen and (max-width: 768px) {
-      .features {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Instantly Audit Your Roofing Business with AI</h1>
-    <p>Scan your website and online presence to discover how to grow your business and get actionable fixes.</p>
-    <input type="text" id="businessInput" placeholder="Enter your website or business name">
-    <button onclick="startAudit()">Start My Free Audit</button>
+  <section class="hero" id="hero">
+    <h1>Instantly Audit Your Roofing Business</h1>
+    <p>Enter your website or business name to get started</p>
+    <input type="text" id="businessInput" placeholder="Enter URL or Business Name" />
+    <br />
+    <button class="btn" onclick="startScan()">Start My Free Audit</button>
   </section>
 
-  <!-- Feature Cards -->
-  <section class="features">
-    <div class="feature-card">
-      <h3>SEO Audit</h3>
-      <p>Analyze on-page SEO, meta tags, and technical issues.</p>
-    </div>
-    <div class="feature-card">
-      <h3>Social Media Check</h3>
-      <p>See how you're performing on Instagram & Facebook.</p>
-    </div>
-    <div class="feature-card">
-      <h3>GMB Reputation</h3>
-      <p>Evaluate your reviews, photos, and info on Google Business.</p>
-    </div>
+  <section class="features hidden" id="scanning">
+    <h2>🔍 Scanning Your Brand...</h2>
+    <div class="progress-bar"><div class="progress-bar-inner" id="progressBar"></div></div>
+    <p id="scanText">Initializing...</p>
   </section>
 
-  <!-- Updated Dashboard Section -->
-  <section class="hidden" id="dashboard">
-    <h2 style="text-align:center;">📈 Your Brand Optimization Dashboard</h2>
-    <p style="text-align:center; color:#666;">We’re actively improving your online presence across platforms.</p>
+  <section class="audit-report hidden" id="auditReport">
+    <h2>📋 Audit Report</h2>
+    <p><strong>SEO Health:</strong> 62% – Needs improvement</p>
+    <p><strong>Social Presence:</strong> <span style="filter: blur(4px);">Incomplete Facebook Profile</span> <em>(Premium Only)</em></p>
+    <p><strong>Google Reviews:</strong> 3.6 ⭐ – Try to improve local feedback</p>
+    <p><strong>Instagram Profile:</strong> <span style="filter: blur(4px);">No bio or highlights</span> <em>(Premium Only)</em></p>
+    <button class="btn" onclick="showProposal()">View Recommended Fix Plans</button>
+  </section>
 
-    <div class="card">
-      <h3>🛠️ Task List</h3>
-      <div style="margin: 15px 0;">
-        <strong>Fix image alt tags on homepage</strong>
-        <div class="progress-bar">
-          <div class="progress-bar-inner" style="width: 60%; background:#f4a261;"></div>
-        </div>
-        <small>Status: In Progress</small>
+  <section class="proposal-page hidden" id="proposalSelection">
+    <h2>📦 Choose Your Growth Plan</h2>
+    <p>Select a bundle tailored to fix your roofing business's digital presence.</p>
+    <div class="proposal-options">
+      <div class="proposal-card">
+        <h4>🚀 SEO Starter Kit <span>$49</span></h4>
+        <ul><li>Fix meta & alt tags</li><li>Sitemap setup</li><li>H1 tag optimization</li></ul>
+        <button class="btn" onclick="addToCart('SEO Starter Kit', 49)">Add to Cart</button>
       </div>
-      <div style="margin: 15px 0;">
-        <strong>Increase Instagram post frequency</strong>
-        <div class="progress-bar">
-          <div class="progress-bar-inner" style="width: 40%; background:#e76f51;"></div>
-        </div>
-        <small>Status: Scheduled</small>
+      <div class="proposal-card">
+        <h4>📱 Social Boost Pack <span>$79</span></h4>
+        <ul><li>Instagram revamp</li><li>Facebook audit fix</li><li>Content calendar</li></ul>
+        <button class="btn" onclick="addToCart('Social Boost Pack', 79)">Add to Cart</button>
       </div>
-      <div style="margin: 15px 0;">
-        <strong>Collect more Google reviews</strong>
-        <div class="progress-bar">
-          <div class="progress-bar-inner" style="width: 20%; background:#2a9d8f;"></div>
-        </div>
-        <small>Status: Pending</small>
+      <div class="proposal-card">
+        <h4>💼 Full Growth Bundle <span>$129</span></h4>
+        <ul><li>All fixes from SEO & Social</li><li>GMB optimization</li><li>1-on-1 Expert Call</li></ul>
+        <button class="btn" onclick="addToCart('Full Growth Bundle', 129)">Add to Cart</button>
       </div>
     </div>
+    <button class="btn" onclick="goToCheckout()">Proceed to Checkout</button>
+  </section>
 
-    <div class="card">
-      <h3>📅 Monthly Progress Report</h3>
-      <p>Your next detailed progress report will be delivered on <strong>1st of Next Month</strong>.</p>
-      <p>It will include:</p>
-      <ul>
-        <li>✔️ Updated SEO health score</li>
-        <li>✔️ Engagement insights from social media</li>
-        <li>✔️ Reputation performance on GMB</li>
-      </ul>
-    </div>
+  <section class="checkout hidden" id="checkout">
+    <h2>🛒 Checkout</h2>
+    <p id="checkoutSummary"></p>
+    <button class="btn" onclick="showCongrats()">Buy Now</button>
+  </section>
+
+  <section class="congrats hidden" id="congrats">
+    <h2>🎉 Congratulations!</h2>
+    <p>You're now a premium subscriber. We'll start working on your improvements immediately.</p>
+    <button class="btn" onclick="showDashboard()">Go to Dashboard</button>
+  </section>
+
+  <section class="dashboard hidden" id="dashboard">
+    <h2>📊 Your Business Dashboard</h2>
+    <p>Here’s your personalized monthly tasklist:</p>
+    <ul>
+      <li>🔧 SEO Enhancements – In Progress</li>
+      <li>📅 Content Calendar – Uploaded for Next 30 Days</li>
+      <li>📍 Google My Business – Pending Optimization</li>
+      <li>📈 Monthly Report – Available on 5th of Every Month</li>
+      <li>🗓️ Book Strategy Call – <em>Pending</em></li>
+    </ul>
   </section>
 
   <script>
-    function startAudit() {
-      document.querySelector(".hero").classList.add("hidden");
-      document.querySelector(".features").classList.add("hidden");
-      document.querySelector("#dashboard").classList.remove("hidden");
+    let selectedPlan = null;
+    let selectedPrice = 0;
+
+    function startScan() {
+      document.getElementById('hero').classList.add('hidden');
+      document.getElementById('scanning').classList.remove('hidden');
+      let scanSteps = [
+        'Checking SEO setup...',
+        'Analyzing mobile speed...',
+        'Checking Instagram profile...',
+        'Reviewing Google Maps...',
+        'Finalizing report...'
+      ];
+      let i = 0;
+      let progress = 0;
+      let interval = setInterval(() => {
+        if (i < scanSteps.length) {
+          document.getElementById('scanText').innerText = scanSteps[i];
+          document.getElementById('progressBar').style.width = `${progress += 20}%`;
+          i++;
+        } else {
+          clearInterval(interval);
+          document.getElementById('scanning').classList.add('hidden');
+          document.getElementById('auditReport').classList.remove('hidden');
+        }
+      }, 1000);
+    }
+
+    function showProposal() {
+      document.getElementById('auditReport').classList.add('hidden');
+      document.getElementById('proposalSelection').classList.remove('hidden');
+    }
+
+    function addToCart(plan, price) {
+      selectedPlan = plan;
+      selectedPrice = price;
+      alert(`Added "${plan}" to cart.`);
+    }
+
+    function goToCheckout() {
+      if (!selectedPlan) return alert("Please select a plan");
+      document.getElementById('proposalSelection').classList.add('hidden');
+      document.getElementById('checkout').classList.remove('hidden');
+      document.getElementById('checkoutSummary').innerHTML = `You're purchasing the <strong>${selectedPlan}</strong> for $${selectedPrice}`;
+    }
+
+    function showCongrats() {
+      document.getElementById('checkout').classList.add('hidden');
+      document.getElementById('congrats').classList.remove('hidden');
+    }
+
+    function showDashboard() {
+      document.getElementById('congrats').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
     }
   </script>
 </body>
